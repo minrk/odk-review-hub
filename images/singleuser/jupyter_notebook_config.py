@@ -1,1 +1,1 @@
-c.LabApp.dev_mode = True
+# c.LabApp.dev_mode = True
