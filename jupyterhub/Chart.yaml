@@ -1,4 +1,4 @@
 apiVersion: v1
 description:
 name: jupyterhub-odk
-version: '0.0.1-089.6a3aa9e'
+version: '0.0.1-092.1dc78bd'

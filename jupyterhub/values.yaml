@@ -32,7 +32,7 @@ jupyterhub:
       homeMountPath: /home/user
     image:
       name: gcr.io/jupyter-simula/k8s-singleuser
-      tag: '0.0.1-124.6a3aa9e'
+      tag: '0.0.1-127.1dc78bd'
       pullPolicy: Always
     startTimeout: 600
     lifecycleHooks:
