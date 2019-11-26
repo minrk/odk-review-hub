@@ -17,7 +17,7 @@ ENV JUPYTERLAB_REF=371ebbb4c3f15d3797b70a9721eb12faf84b0335
 #  && jlpm run build \
 #  && jupyter lab clean
 
-RUN conda install -yq tomopy \
+RUN conda install -yq dxchange tomopy \
  && conda clean -pity
 
 RUN pip install --no-cache nbgitpuller jupyterhub==1.0.*

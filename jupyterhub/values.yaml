@@ -35,14 +35,14 @@ jupyterhub:
       tag: '0.0.1-122.42db624'
       pullPolicy: Always
     startTimeout: 600
-    # lifecycleHooks:
-    #   postStart:
-    #     exec:
-    #       command:
-    #         - gitpuller
-    #         - https://github.com/opendreamkit/gap-demos
-    #         - master
-    #         - gap-demos
+    lifecycleHooks:
+      postStart:
+        exec:
+          command:
+            - gitpuller
+            - https://github.com/tomography/tomopy-short-course
+            - master
+            - tomopy-short-course
     # extraNodeAffinity:
     #   preferred:
     #     - weight: 100
