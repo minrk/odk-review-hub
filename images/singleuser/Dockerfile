@@ -20,6 +20,11 @@ ENV JUPYTERLAB_REF=371ebbb4c3f15d3797b70a9721eb12faf84b0335
 RUN conda install -yq dxchange tomopy \
  && conda clean -pity
 
+RUN conda install -c conda-forge ipyvolume \
+ && conda clean -pity
+RUN jupyter labextension install  jupyter-threejs ipyvolume \
+ && jupyter lab clean
+
 RUN pip install --no-cache nbgitpuller jupyterhub==1.0.*
 
 COPY jupyter_notebook_config.py /etc/jupyter/
