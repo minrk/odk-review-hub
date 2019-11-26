@@ -11,13 +11,11 @@ jupyterhub:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/issuer: "letsencrypt-prod"
     hosts:
-      - odk-review.minrk.net
-      - review-vre.opendreamkit.org
+      - lorentz.minrk.net
     tls:
       - secretName: tls-jupyterhub
         hosts:
-          - odk-review.minrk.net
-          - review-vre.opendreamkit.org
+          - lorentz.minrk.net
   auth:
     type: github
     admin:
@@ -25,7 +23,7 @@ jupyterhub:
       users:
         - minrk
     github:
-      callbackUrl: "https://review-vre.opendreamkit.org/hub/oauth_callback"
+      callbackUrl: "https://lorentz.minrk.net/hub/oauth_callback"
 
   singleuser:
     cmd: jupyter-labhub
@@ -33,109 +31,109 @@ jupyterhub:
     storage:
       homeMountPath: /home/user
     image:
-      name: gcr.io/simula-odk/k8s-singleuser
+      name: gcr.io/jupyter-simula/k8s-singleuser
       tag: '0.0.1-116.71b59df'
       pullPolicy: Always
     startTimeout: 600
-    lifecycleHooks:
-      postStart:
-        exec:
-          command:
-            - gitpuller
-            - https://github.com/opendreamkit/gap-demos
-            - master
-            - gap-demos
-    extraNodeAffinity:
-      preferred:
-        - weight: 100
-          preference:
-            matchExpressions:
-              - key: jupyterhub-node
-                operator: NotIn
-                values:
-                  - hpc
-    profileList:
-      - display_name: "Default"
-        description: "The default environment, with SageMath and JupyterLab, light\
-          \ resources"
-        default: true
-      - display_name: "4 CPUs"
-        description: "The default SageMath environment, but with 4 CPUs available"
-        kubespawner_override:
-          cpu_guarantee: 4
-          cpu_limit: 4
-      - display_name: "Big"
-        description: "The default SageMath environment, but with 32 CPUs available"
-        kubespawner_override:
-          cpu_guarantee: 8
-          cpu_limit: 16
-          mem_limit: 8G
-          node_affinity_required:
-            - matchExpressions:
-                - key: jupyterhub-node
-                  operator: In
-                  values:
-                    - hpc
-      - display_name: "GAP"
-        description: "GAP demo environment, stable version"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-gap:0.0.1-113.bd29be8
-          cpu_guarantee: 0.75
-          cpu_limit: 1
-          mem_limit: 4G
-          mem_guarantee: 1G
-      - display_name: "GAP (master)"
-        description: "GAP demo environment, latest development version"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-gap-master:0.0.1-119.fba88fd
-          cpu_guarantee: 9
-          cpu_limit: 16
-          mem_guarantee: 16G
-          mem_limit: 32G
-      - display_name: "Singular Parallel (lite)"
-        description: "Singular Parallel demo environment, with only 4 cpus"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-singular:0.0.1-111.92d59fa
-          cpu_guarantee: 4
-          cpu_limit: 4
-      - display_name: "Singular Parallel"
-        description: "Singular Parallel demo environment, with 32 CPUs available"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-singular:0.0.1-111.92d59fa
-          cpu_guarantee: 8
-          cpu_limit: 32
-          mem_limit: 16G
-          node_affinity_required:
-            - matchExpressions:
-                - key: jupyterhub-node
-                  operator: In
-                  values:
-                    - hpc
+    # lifecycleHooks:
+    #   postStart:
+    #     exec:
+    #       command:
+    #         - gitpuller
+    #         - https://github.com/opendreamkit/gap-demos
+    #         - master
+    #         - gap-demos
+    # extraNodeAffinity:
+    #   preferred:
+    #     - weight: 100
+    #       preference:
+    #         matchExpressions:
+    #           - key: jupyterhub-node
+    #             operator: NotIn
+    #             values:
+    #               - hpc
+    # profileList:
+    #   - display_name: "Default"
+    #     description: "The default environment, with SageMath and JupyterLab, light\
+    #       \ resources"
+    #     default: true
+    #   - display_name: "4 CPUs"
+    #     description: "The default SageMath environment, but with 4 CPUs available"
+    #     kubespawner_override:
+    #       cpu_guarantee: 4
+    #       cpu_limit: 4
+    #   - display_name: "Big"
+    #     description: "The default SageMath environment, but with 32 CPUs available"
+    #     kubespawner_override:
+    #       cpu_guarantee: 8
+    #       cpu_limit: 16
+    #       mem_limit: 8G
+    #       node_affinity_required:
+    #         - matchExpressions:
+    #             - key: jupyterhub-node
+    #               operator: In
+    #               values:
+    #                 - hpc
+    #   - display_name: "GAP"
+    #     description: "GAP demo environment, stable version"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-gap:0.0.1-113.bd29be8
+    #       cpu_guarantee: 0.75
+    #       cpu_limit: 1
+    #       mem_limit: 4G
+    #       mem_guarantee: 1G
+    #   - display_name: "GAP (master)"
+    #     description: "GAP demo environment, latest development version"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-gap-master:0.0.1-119.fba88fd
+    #       cpu_guarantee: 9
+    #       cpu_limit: 16
+    #       mem_guarantee: 16G
+    #       mem_limit: 32G
+    #   - display_name: "Singular Parallel (lite)"
+    #     description: "Singular Parallel demo environment, with only 4 cpus"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-singular:0.0.1-111.92d59fa
+    #       cpu_guarantee: 4
+    #       cpu_limit: 4
+    #   - display_name: "Singular Parallel"
+    #     description: "Singular Parallel demo environment, with 32 CPUs available"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-singular:0.0.1-111.92d59fa
+    #       cpu_guarantee: 8
+    #       cpu_limit: 32
+    #       mem_limit: 16G
+    #       node_affinity_required:
+    #         - matchExpressions:
+    #             - key: jupyterhub-node
+    #               operator: In
+    #               values:
+    #                 - hpc
 
-      - display_name: "HPC GAP (lite)"
-        description: "HPC GAP Parallel demo environment, with only 4 cpu cores for\
-          \ testing"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-hpcgap:0.0.1-111.92d59fa
-          cpu_guarantee: 4
-          cpu_limit: 4
-      - display_name: "HPC GAP Parallel"
-        description: "HPC GAP Parallel demo environment, with 32 CPUs available"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-hpcgap:0.0.1-111.92d59fa
-          cpu_guarantee: 8
-          cpu_limit: 32
-          mem_limit: 36G
-          node_affinity_required:
-            - matchExpressions:
-                - key: jupyterhub-node
-                  operator: In
-                  values:
-                    - hpc
-      - display_name: "Real-time Collaboration"
-        description: "Real-time collaboration demo image"
-        kubespawner_override:
-          image: gcr.io/simula-odk/k8s-rtc:0.0.1-111.92d59fa
+    #   - display_name: "HPC GAP (lite)"
+    #     description: "HPC GAP Parallel demo environment, with only 4 cpu cores for\
+    #       \ testing"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-hpcgap:0.0.1-111.92d59fa
+    #       cpu_guarantee: 4
+    #       cpu_limit: 4
+    #   - display_name: "HPC GAP Parallel"
+    #     description: "HPC GAP Parallel demo environment, with 32 CPUs available"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-hpcgap:0.0.1-111.92d59fa
+    #       cpu_guarantee: 8
+    #       cpu_limit: 32
+    #       mem_limit: 36G
+    #       node_affinity_required:
+    #         - matchExpressions:
+    #             - key: jupyterhub-node
+    #               operator: In
+    #               values:
+    #                 - hpc
+    #   - display_name: "Real-time Collaboration"
+    #     description: "Real-time collaboration demo image"
+    #     kubespawner_override:
+    #       image: gcr.io/simula-odk/k8s-rtc:0.0.1-111.92d59fa
 
     memory:
       limit: 3G
@@ -146,9 +144,9 @@ jupyterhub:
     schedulerStrategy: pack
     extraEnv:
       CULL_CONNECTED: '1'
-      CULL_TIMEOUT: '1800'
-      CULL_KERNEL_TIMEOUT: '1800'
-      CULL_INTERVAL: '120'
+      CULL_TIMEOUT: '900'
+      CULL_KERNEL_TIMEOUT: '900'
+      CULL_INTERVAL: '107'
 
   prePuller:
     hook:
@@ -193,12 +191,10 @@ grafana:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/issuer: "letsencrypt-prod"
     hosts:
-      - grafana.odk-review.minrk.net
-      - grafana.review-vre.opendreamkit.org
+      - grafana.lorentz.minrk.net
     tls:
       - hosts:
-          - grafana.odk-review.minrk.net
-          - grafana.review-vre.opendreamkit.org
+          - grafana.lorentz.minrk.net
         secretName: tls-grafana
   persistence:
     size: 2Gi
@@ -212,7 +208,7 @@ grafana:
         - name: prometheus
           orgId: 1
           type: prometheus
-          url: https://prometheus.review-vre.opendreamkit.org
+          url: https://prometheus.lorentz.minrk.net
           access: direct
           isDefault: true
           editable: false
@@ -236,12 +232,10 @@ prometheus:
         kubernetes.io/ingress.class: nginx
         cert-manager.io/issuer: "letsencrypt-prod"
       hosts:
-        - prometheus.odk-review.minrk.net
-        - prometheus.review-vre.opendreamkit.org
+        - prometheus.lorentz.minrk.net
       tls:
         - hosts:
-            - prometheus.odk-review.minrk.net
-            - prometheus.review-vre.opendreamkit.org
+            - prometheus.lorentz.minrk.net
           secretName: tls-prometheus
 
 acme:
@@ -268,7 +262,7 @@ nginx-ingress:
     service:
       # Preserve client IPs
       externalTrafficPolicy: Local
-      loadBalancerIP: 34.77.130.182
+      loadBalancerIP: 35.205.90.242
       # preserve healthcheck port
       # this shouldn't be needed, but it's erroring on 0
       healthCheckNodePort: 30278

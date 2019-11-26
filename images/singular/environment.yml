@@ -1,7 +1,0 @@
-channels:
-  - minrk/label/odk
-  - conda-forge
-dependencies:
-  - flint2=*=*_0
-  - singular=*=*_1
-  - nbgitpuller

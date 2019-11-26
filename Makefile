@@ -1,6 +1,5 @@
-IMAGE=gcr.io/simula-odk/singleuser:2019
-KUBE_CTX=odk
-GKE_PROJECT=simula-odk
+KUBE_CTX=gke_jupyter-simula_europe-west1-b_lorentz
+GKE_PROJECT=jupyter-simula
 GKE_ZONE=europe-west1-b
 
 .PHONY: image push
